@@ -27,7 +27,7 @@ public class CurrencyValidator {
             StatusMessage.UNCORRECTED_CODE.sendError(response);
         } else if (!Pattern.matches("^[\\sa-zA-Z]{1,30}$", currency.getName())) {
             StatusMessage.UNCORRECTED_NAME.sendError(response);
-        } else if (!Pattern.matches("^[\\p{Sc}a-zA-Z]{1,2}$", currency.getSign())) {
+        } else if (!Pattern.matches("^.{1,2}$", currency.getSign())) {
             StatusMessage.UNCORRECTED_SIGN.sendError(response);
         } else {
             return StatusMessage.OK;
