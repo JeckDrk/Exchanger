@@ -1,0 +1,42 @@
+SELECT exchangerate.*, bc.code, tc.code
+FROM exchangerate
+         JOIN currencies bc ON exchangerate.basecurrencyid = bc.id
+         JOIN currencies tc ON exchangerate.targetcurrencyid = tc.id
+where bc.code = 'USD' and tc.code = 'EUR';
+
+INSERT INTO exchangerate (basecurrencyid, targetcurrencyid, rate)
+SELECT
+    base.ID AS basecurrencyid,
+    target.ID AS targetcurrencyid,
+    11 AS rate
+FROM currencies base, currencies target
+WHERE base.Code = 'EUR'
+  AND target.Code = 'USD';
+
+SELECT * FROM exchangerate;
+
+INSERT INTO exchangerate(basecurrencyid, targetcurrencyid, rate) VALUES (?, ?, ?);
+
+UPDATE exchangerate SET rate = 12
+WHERE basecurrencyid = (SELECT ID FROM currencies WHERE Code = 'EU')
+  AND targetcurrencyid = (SELECT ID FROM currencies WHERE Code = 'Us');
+
+drop table if exists currencies;
+CREATE TABLE currencies (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            code VARCHAR UNIQUE NOT NULL,
+                            fullname VARCHAR NOT NULL,
+                            sign VARCHAR NOT NULL
+);
+
+drop table if exists exchangerate;
+CREATE TABLE exchangerate (
+                              id INTEGER PRIMARY KEY AUTOINCREMENT,
+                              basecurrencyid INTEGER NOT NULL ,
+                              targetcurrencyid INTEGER NOT NULL,
+                              rate DECIMAL(6) NOT NULL,
+                              FOREIGN KEY (BaseCurrencyId) REFERENCES currencies(ID),
+                              FOREIGN KEY (TargetCurrencyId) REFERENCES currencies(ID)
+);
+
+CREATE UNIQUE INDEX IX_ExchangeRates_Base_Target ON exchangerate(basecurrencyid, targetcurrencyid);

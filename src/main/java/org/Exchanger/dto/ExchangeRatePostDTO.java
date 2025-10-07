@@ -1,16 +1,30 @@
 package org.Exchanger.dto;
 
-public class ExchangeRateDTO {
+public class ExchangeRatePostDTO {
     private int id;
     private CurrencyDTO baseCurrency;
     private CurrencyDTO targetCurrency;
     private double rate;
 
-    public ExchangeRateDTO() {
+    public ExchangeRatePostDTO() {
     }
 
-    public ExchangeRateDTO(int id, CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate) {
+    public ExchangeRatePostDTO(int id, CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate) {
         this.id = id;
+        this.baseCurrency = baseCurrency;
+        this.targetCurrency = targetCurrency;
+        this.rate = rate;
+    }
+
+    public ExchangeRatePostDTO(CurrencyDTO baseCurrency, CurrencyDTO targetCurrency) {
+        this.id = 0;
+        this.baseCurrency = baseCurrency;
+        this.targetCurrency = targetCurrency;
+        this.rate = 0;
+    }
+
+    public ExchangeRatePostDTO(CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate) {
+        this.id = 0;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
         this.rate = rate;

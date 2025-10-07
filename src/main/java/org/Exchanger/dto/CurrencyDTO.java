@@ -16,6 +16,13 @@ public class CurrencyDTO {
         this.sign = sign;
     }
 
+    public CurrencyDTO(String code) {
+        this.id = 0;
+        this.code = code;
+        this.name = "";
+        this.sign = "";
+    }
+
     public int getId() {
         return id;
     }
@@ -46,16 +53,6 @@ public class CurrencyDTO {
 
     public void setSign(String sign) {
         this.sign = sign;
-    }
-
-    @Override
-    public String toString() {
-        return "CurrencyDTO{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", fullName='" + name + '\'' +
-                ", sign='" + sign + '\'' +
-                '}';
     }
 
 }

@@ -1,4 +1,6 @@
-package org.Exchanger.dao;
+package org.Exchanger.storage;
+
+import org.Exchanger.errors.StorageException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,10 +17,10 @@ public abstract class DAO {
         }
 
         try {
-            String dbPath = System.getProperty("user.dir");
             CONNECTION = DriverManager.getConnection("jdbc:sqlite::resource:DataBase.db");
+            //CONNECTION = DriverManager.getConnection("jdbc:sqlite:C:/Users/dames/IdeaProjects/Exchanger/src/main/resources/DataBase.db");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new StorageException();
         }
     }
 }

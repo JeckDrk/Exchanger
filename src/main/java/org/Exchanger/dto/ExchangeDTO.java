@@ -10,10 +10,10 @@ public class ExchangeDTO {
     public ExchangeDTO() {
     }
 
-    public ExchangeDTO(CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate, double amount, double convertedAmount) {
-        this.baseCurrency = baseCurrency;
-        this.targetCurrency = targetCurrency;
-        this.rate = rate;
+    public ExchangeDTO(ExchangeRatePostDTO exchangeRate, double amount, double convertedAmount) {
+        this.baseCurrency = exchangeRate.getBaseCurrency();
+        this.targetCurrency = exchangeRate.getTargetCurrency();
+        this.rate = exchangeRate.getRate();
         this.amount = amount;
         this.convertedAmount = convertedAmount;
     }
