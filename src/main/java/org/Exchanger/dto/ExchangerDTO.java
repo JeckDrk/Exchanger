@@ -1,36 +1,37 @@
 package org.Exchanger.dto;
 
-public class ExchangeDTO {
-    private CurrencyDTO baseCurrency;
-    private CurrencyDTO targetCurrency;
+
+public class ExchangerDTO {
+    private String baseCurrency;
+    private String targetCurrency;
     private double rate;
     private double amount;
     private double convertedAmount;
 
-    public ExchangeDTO() {
+    public ExchangerDTO() {
     }
 
-    public ExchangeDTO(ExchangeRatePostDTO exchangeRate, double amount, double convertedAmount) {
-        this.baseCurrency = exchangeRate.getBaseCurrency();
-        this.targetCurrency = exchangeRate.getTargetCurrency();
-        this.rate = exchangeRate.getRate();
+    public ExchangerDTO(String baseCurrency, String targetCurrency, double amount) {
+        this.baseCurrency = baseCurrency;
+        this.targetCurrency = targetCurrency;
+        this.rate = 1;
         this.amount = amount;
-        this.convertedAmount = convertedAmount;
+        this.convertedAmount = 1;
     }
 
-    public CurrencyDTO getBaseCurrency() {
+    public String getBaseCurrency() {
         return baseCurrency;
     }
 
-    public void setBaseCurrency(CurrencyDTO baseCurrency) {
+    public void setBaseCurrency(String baseCurrency) {
         this.baseCurrency = baseCurrency;
     }
 
-    public CurrencyDTO getTargetCurrency() {
+    public String getTargetCurrency() {
         return targetCurrency;
     }
 
-    public void setTargetCurrency(CurrencyDTO targetCurrency) {
+    public void setTargetCurrency(String targetCurrency) {
         this.targetCurrency = targetCurrency;
     }
 

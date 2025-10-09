@@ -1,17 +1,18 @@
 package org.Exchanger.controller.servlets;
 
 import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.Exchanger.utils.mapper.BaseMapper;
+import org.Exchanger.utils.validator.CurrencyValidator;
 import org.Exchanger.utils.wrapper.ResponseWrapper;
 import org.Exchanger.storage.CurrencyStorage;
 import org.Exchanger.dto.CurrencyDTO;
 import org.Exchanger.service.CurrenciesService;
 import org.Exchanger.utils.mapper.CurrencyMapper;
+import org.Exchanger.entity.Currency;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,14 +25,14 @@ public class CurrenciesServlet extends HttpServlet {
     private CurrencyStorage currencyStorage;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         currencyStorage = (CurrencyStorage) config.getServletContext().getAttribute("currencyStorage");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        List<CurrencyDTO> currencies = SERVICE.getAllCurrencies(currencyStorage);
+        List<Currency> currencies = SERVICE.getAllCurrencies(currencyStorage);
 
         response.getWriter().write(BaseMapper.toJson(currencies));
     }
@@ -39,10 +40,12 @@ public class CurrenciesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        CurrencyDTO currency = CurrencyMapper.curFromUrl(request);
+        CurrencyDTO currencyDTO = CurrencyMapper.DtoFromUrl(request);
 
-        CurrencyDTO currencyDTO = SERVICE.addCurrency(currency, currencyStorage);
+        CurrencyValidator.validateCurrencyDTO(currencyDTO);
 
-        ResponseWrapper.send(response, BaseMapper.toJson(currencyDTO), HttpServletResponse.SC_CREATED);
+        Currency currency = SERVICE.addCurrency(currencyDTO, currencyStorage);
+
+        ResponseWrapper.send(response, BaseMapper.toJson(currency), HttpServletResponse.SC_CREATED);
     }
 }

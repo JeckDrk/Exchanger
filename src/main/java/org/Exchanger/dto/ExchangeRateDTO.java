@@ -1,30 +1,30 @@
 package org.Exchanger.dto;
 
-public class ExchangeRateGetDTO {
+public class ExchangeRateDTO {
     private int id;
     private String baseCurrency;
     private String targetCurrency;
     private double rate;
 
-    public ExchangeRateGetDTO() {
+    public ExchangeRateDTO() {
     }
 
-    public ExchangeRateGetDTO(int id, String baseCurrency, String targetCurrency, double rate) {
+    public ExchangeRateDTO(int id, String baseCurrency, String targetCurrency, double rate) {
         this.id = id;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
         this.rate = rate;
     }
 
-    public ExchangeRateGetDTO(String baseCurrency, String targetCurrency) {
-        this.id = 0;
+    public ExchangeRateDTO(String baseCurrency, String targetCurrency) {
+        this.id = 1;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
-        this.rate = 0;
+        this.rate = 1;
     }
 
-    public ExchangeRateGetDTO(String baseCurrency, String targetCurrency, double rate) {
-        this.id = 0;
+    public ExchangeRateDTO(String baseCurrency, String targetCurrency, double rate) {
+        this.id = 1;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
         this.rate = rate;

@@ -1,7 +1,6 @@
 package org.Exchanger.storage;
 
-import org.Exchanger.dto.ExchangeRateGetDTO;
-import org.Exchanger.dto.ExchangeRatePostDTO;
+import org.Exchanger.entity.ExchangeRate;
 import org.Exchanger.errors.ApplicationException;
 import org.Exchanger.errors.StorageException;
 import org.Exchanger.errors.UniqueException;
@@ -17,9 +16,9 @@ import java.util.List;
 
 public class ExchangeRateDAO extends DAO implements ExchangerStorage{
 
-    public List<ExchangeRatePostDTO> getAll() throws ApplicationException {
+    public List<ExchangeRate> getAll(CurrencyStorage currencyStorage) throws ApplicationException {
         try {
-            List<ExchangeRatePostDTO> currencies = new ArrayList<>();
+            List<ExchangeRate> currencies = new ArrayList<>();
 
             String query = "SELECT * FROM exchangerate";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
@@ -27,7 +26,7 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                currencies.add(ExchangerMapper.getExchangeRate(resultSet));
+                currencies.add(ExchangerMapper.getExchangeRate(resultSet, currencyStorage));
             }
 
             return currencies;
@@ -36,7 +35,7 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
         }
     }
 
-    public ExchangeRatePostDTO get(ExchangeRateGetDTO rate) throws ApplicationException {
+    public ExchangeRate get(String baseCurrencyCode, String targetCurrencyCode, CurrencyStorage currencyStorage) throws ApplicationException {
         try {
             String query = """
                     SELECT exchangerate.*, bc.code, tc.code FROM exchangerate
@@ -45,18 +44,18 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
                         where bc.code = ? and tc.code = ?;""";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
 
-            preparedStatement.setString(1, rate.getBaseCurrency());
-            preparedStatement.setString(2, rate.getTargetCurrency());
+            preparedStatement.setString(1, baseCurrencyCode);
+            preparedStatement.setString(2, targetCurrencyCode);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return ExchangerMapper.getExchangeRate(resultSet);
+            return ExchangerMapper.getExchangeRate(resultSet, currencyStorage);
         } catch (SQLException e){
             throw new StorageException();
         }
     }
 
-    public void insert(ExchangeRateGetDTO exchangeRate) throws ApplicationException {
+    public void insert(String baseCurrencyCode, String targetCurrencyCode, double rate) throws ApplicationException {
         try {
             String query = """
                     INSERT INTO exchangerate (basecurrencyid, targetcurrencyid, rate) \
@@ -68,9 +67,9 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
                     WHERE base.code = ? AND target.code = ?""";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
 
-            preparedStatement.setDouble(1, exchangeRate.getRate());
-            preparedStatement.setString(2, exchangeRate.getBaseCurrency());
-            preparedStatement.setString(3, exchangeRate.getTargetCurrency());
+            preparedStatement.setDouble(1, rate);
+            preparedStatement.setString(2, baseCurrencyCode);
+            preparedStatement.setString(3, targetCurrencyCode);
 
             int prep = preparedStatement.executeUpdate();
             System.out.println(prep);
@@ -84,7 +83,7 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
         }
     }
 
-    public void update(ExchangeRateGetDTO exchangeRate) throws ApplicationException {
+    public void update(String baseCurrencyCode, String targetCurrencyCode, double rate) throws ApplicationException {
         try {
             String query = """
                     UPDATE exchangerate SET rate = ?\s
@@ -92,9 +91,9 @@ public class ExchangeRateDAO extends DAO implements ExchangerStorage{
                       AND targetcurrencyid = (SELECT id FROM currencies WHERE code = ?)""";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
 
-            preparedStatement.setDouble(1, exchangeRate.getRate());
-            preparedStatement.setString(2, exchangeRate.getBaseCurrency());
-            preparedStatement.setString(3, exchangeRate.getTargetCurrency());
+            preparedStatement.setDouble(1, rate);
+            preparedStatement.setString(2, baseCurrencyCode);
+            preparedStatement.setString(3, targetCurrencyCode);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

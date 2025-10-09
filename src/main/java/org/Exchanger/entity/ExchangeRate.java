@@ -1,30 +1,32 @@
-package org.Exchanger.dto;
+package org.Exchanger.entity;
 
-public class ExchangeRatePostDTO {
+import org.Exchanger.entity.Currency;
+
+public class ExchangeRate {
     private int id;
-    private CurrencyDTO baseCurrency;
-    private CurrencyDTO targetCurrency;
+    private Currency baseCurrency;
+    private Currency targetCurrency;
     private double rate;
 
-    public ExchangeRatePostDTO() {
+    public ExchangeRate() {
     }
 
-    public ExchangeRatePostDTO(int id, CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate) {
+    public ExchangeRate(int id, Currency baseCurrency, Currency targetCurrency, double rate) {
         this.id = id;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
         this.rate = rate;
     }
 
-    public ExchangeRatePostDTO(CurrencyDTO baseCurrency, CurrencyDTO targetCurrency) {
-        this.id = 0;
+    public ExchangeRate(Currency baseCurrency, Currency targetCurrency) {
+        this.id = 1;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
-        this.rate = 0;
+        this.rate = 1;
     }
 
-    public ExchangeRatePostDTO(CurrencyDTO baseCurrency, CurrencyDTO targetCurrency, double rate) {
-        this.id = 0;
+    public ExchangeRate(Currency baseCurrency, Currency targetCurrency, double rate) {
+        this.id = 1;
         this.baseCurrency = baseCurrency;
         this.targetCurrency = targetCurrency;
         this.rate = rate;
@@ -38,19 +40,19 @@ public class ExchangeRatePostDTO {
         this.id = id;
     }
 
-    public CurrencyDTO getBaseCurrency() {
+    public Currency getBaseCurrency() {
         return baseCurrency;
     }
 
-    public void setBaseCurrency(CurrencyDTO baseCurrency) {
+    public void setBaseCurrency(Currency baseCurrency) {
         this.baseCurrency = baseCurrency;
     }
 
-    public CurrencyDTO getTargetCurrency() {
+    public Currency getTargetCurrency() {
         return targetCurrency;
     }
 
-    public void setTargetCurrency(CurrencyDTO targetCurrency) {
+    public void setTargetCurrency(Currency targetCurrency) {
         this.targetCurrency = targetCurrency;
     }
 

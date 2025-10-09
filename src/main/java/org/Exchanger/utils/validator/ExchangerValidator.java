@@ -35,7 +35,7 @@ public class ExchangerValidator {
         }
     }
 
-    public static void validateExchangeRate(String baseCurrencyCode, String targetCurrencyCode, String buf){
+    public static void validateExchangeRateDTO(String baseCurrencyCode, String targetCurrencyCode, String buf){
         isEmptyRate(baseCurrencyCode, targetCurrencyCode, buf);
         equalCodes(baseCurrencyCode, targetCurrencyCode);
         CurrencyValidator.validateCode(baseCurrencyCode);
@@ -54,11 +54,4 @@ public class ExchangerValidator {
         CurrencyValidator.validateCode(baseCurrencyCode);
         CurrencyValidator.validateCode(targetCurrencyCode);
     }
-
-    public static void isEmptyCode(String code){
-        if(code.isEmpty()){
-            throw new InputException(StatusMessage.EMPTY_REQUEST.getJson(), HttpServletResponse.SC_BAD_REQUEST);
-        }
-    }
-
 }

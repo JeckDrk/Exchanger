@@ -21,6 +21,9 @@ public class CurrencyValidator {
     }
 
     public static void validateCode(String code){
+        if(code.isEmpty()){
+            throw new InputException(StatusMessage.EMPTY_REQUEST.getJson(), HttpServletResponse.SC_BAD_REQUEST);
+        }
         if (!currencyCodes.contains(code.toUpperCase())) {
             throw new InputException(StatusMessage.UNCORRECTED_CODE.getJson(), HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -44,7 +47,7 @@ public class CurrencyValidator {
         }
     }
 
-    public static void validateCurrency(CurrencyDTO currency){
+    public static void validateCurrencyDTO(CurrencyDTO currency){
         isEmptyCurrency(currency);
         validateCode(currency.getCode());
         validateName(currency.getName());

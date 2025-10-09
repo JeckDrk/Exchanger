@@ -1,26 +1,19 @@
-package org.Exchanger.dto;
+package org.Exchanger.entity;
 
-public class CurrencyDTO {
+public class Currency {
     private int id;
     private String code;
     private String name;
     private String sign;
 
-    public CurrencyDTO() {
+    public Currency() {
     }
 
-    public CurrencyDTO(int id, String code, String name, String sign) {
+    public Currency(int id, String code, String name, String sign) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.sign = sign;
-    }
-
-    public CurrencyDTO(String code) {
-        this.id = 1;
-        this.code = code;
-        this.name = "Valid";
-        this.sign = "Va";
     }
 
     public int getId() {
@@ -36,7 +29,7 @@ public class CurrencyDTO {
     }
 
     public void setCode(String code) {
-        this.code = code.toUpperCase();
+        this.code = code;
     }
 
     public String getName() {
@@ -54,5 +47,4 @@ public class CurrencyDTO {
     public void setSign(String sign) {
         this.sign = sign;
     }
-
 }
